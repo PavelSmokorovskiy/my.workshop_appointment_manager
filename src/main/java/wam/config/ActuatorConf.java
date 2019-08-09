@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * Spring Boot Actuator Controller
- * Created by Pavel Smokorovskiy on 04.04.18
  */
 @Controller
 public class ActuatorConf {
