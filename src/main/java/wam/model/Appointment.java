@@ -24,15 +24,15 @@ public class Appointment {
     private Workshop workshop;
 
     @Column(name = "appointment_time")
-    private LocalDateTime appointmentTime;
+    private LocalDateTime time;
 
     public Appointment() {
     }
 
-    public Appointment(User user, Workshop workshop, LocalDateTime appointmentTime) {
+    public Appointment(User user, Workshop workshop, LocalDateTime time) {
         this.user = user;
         this.workshop = workshop;
-        this.appointmentTime = appointmentTime;
+        this.time = time;
     }
 
     public Long getAppointmentId() {
@@ -59,11 +59,11 @@ public class Appointment {
         this.workshop = workshop;
     }
 
-    public LocalDateTime getAppointmentTime() {
-        return appointmentTime;
+    public LocalDateTime getTime() {
+        return time;
     }
 
-    public void setAppointmentTime(LocalDateTime appointmentTime) {
-        this.appointmentTime = appointmentTime;
+    public void setTime(LocalDateTime time) {
+        this.time = time;
     }
 }

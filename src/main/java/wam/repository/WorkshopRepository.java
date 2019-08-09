@@ -15,6 +15,7 @@ public interface WorkshopRepository extends JpaRepository<Workshop, Long> {
     Workshop findByWorkshopId(Long workshopId);
 
     List<Workshop> findByCompanyNameContains(String companyName);
+
     List<Workshop> findByCityContains(String city);
 
 }
