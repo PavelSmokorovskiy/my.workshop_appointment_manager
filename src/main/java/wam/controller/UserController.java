@@ -96,7 +96,7 @@ public class UserController {
     }
 
     /**
-     * Update a user
+     * Update a user data
      *
      * @link localhost:8080/user/username/email/city/postalCode/country
      */

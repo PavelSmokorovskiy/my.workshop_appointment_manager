@@ -44,14 +44,12 @@ public class Workshop {
                     String trademarks,
                     String city,
                     String postalCode,
-                    String country,
-                    Set<Appointment> appointments) {
+                    String country) {
         this.companyName = companyName;
         this.trademarks = trademarks;
         this.city = city;
         this.postalCode = postalCode;
         this.country = country;
-        this.appointments = appointments;
     }
 
     public Long getWorkshopId() {
