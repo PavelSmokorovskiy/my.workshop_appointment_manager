@@ -17,21 +17,21 @@ public class Workshop {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long workshopId;
 
-    @Column(name = "workshop_company_name")
+    @Column(name = "company_name")
     @NotEmpty(message = "Please provide Company name")
-    private String workshopCompanyName;
+    private String companyName;
 
-    @Column(name = "workshop_trademarks")
-    private String workshopTrademarks;
+    @Column(name = "trademarks")
+    private String trademarks;
 
-    @Column(name = "workshop_city")
-    private String workshopCity;
+    @Column(name = "city")
+    private String city;
 
-    @Column(name = "workshop_postal_code")
-    private String workshopPostalCode;
+    @Column(name = "postal_code")
+    private String postalCode;
 
-    @Column(name = "workshop_country")
-    private String workshopCountry;
+    @Column(name = "country")
+    private String country;
 
     @OneToMany(mappedBy = "user")
     private Set<Appointment> appointments = new HashSet<>();
@@ -40,17 +40,17 @@ public class Workshop {
     }
 
     public Workshop(@NotEmpty(message = "Please provide Company name")
-                            String workshopCompanyName,
-                    String workshopTrademarks,
-                    String workshopCity,
-                    String workshopPostalCode,
-                    String workshopCountry,
+                            String companyName,
+                    String trademarks,
+                    String city,
+                    String postalCode,
+                    String country,
                     Set<Appointment> appointments) {
-        this.workshopCompanyName = workshopCompanyName;
-        this.workshopTrademarks = workshopTrademarks;
-        this.workshopCity = workshopCity;
-        this.workshopPostalCode = workshopPostalCode;
-        this.workshopCountry = workshopCountry;
+        this.companyName = companyName;
+        this.trademarks = trademarks;
+        this.city = city;
+        this.postalCode = postalCode;
+        this.country = country;
         this.appointments = appointments;
     }
 
@@ -62,44 +62,44 @@ public class Workshop {
         this.workshopId = workshopId;
     }
 
-    public String getWorkshopCompanyName() {
-        return workshopCompanyName;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setWorkshopCompanyName(String workshopCompanyName) {
-        this.workshopCompanyName = workshopCompanyName;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
-    public String getWorkshopTrademarks() {
-        return workshopTrademarks;
+    public String getTrademarks() {
+        return trademarks;
     }
 
-    public void setWorkshopTrademarks(String workshopTrademarks) {
-        this.workshopTrademarks = workshopTrademarks;
+    public void setTrademarks(String trademarks) {
+        this.trademarks = trademarks;
     }
 
-    public String getWorkshopCity() {
-        return workshopCity;
+    public String getCity() {
+        return city;
     }
 
-    public void setWorkshopCity(String workshopCity) {
-        this.workshopCity = workshopCity;
+    public void setCity(String city) {
+        this.city = city;
     }
 
-    public String getWorkshopPostalCode() {
-        return workshopPostalCode;
+    public String getPostalCode() {
+        return postalCode;
     }
 
-    public void setWorkshopPostalCode(String workshopPostalCode) {
-        this.workshopPostalCode = workshopPostalCode;
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 
-    public String getWorkshopCountry() {
-        return workshopCountry;
+    public String getCountry() {
+        return country;
     }
 
-    public void setWorkshopCountry(String workshopCountry) {
-        this.workshopCountry = workshopCountry;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public Set<Appointment> getAppointments() {
