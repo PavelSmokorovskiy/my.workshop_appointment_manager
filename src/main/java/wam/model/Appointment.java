@@ -23,16 +23,16 @@ public class Appointment {
     @JoinColumn(name = "workshop_id")
     private Workshop workshop;
 
-    @Column(name = "appointment_time")
-    private LocalDateTime time;
+    @Column(name = "date_time")
+    private LocalDateTime dateTime;
 
     public Appointment() {
     }
 
-    public Appointment(User user, Workshop workshop, LocalDateTime time) {
+    public Appointment(User user, Workshop workshop, LocalDateTime dateTime) {
         this.user = user;
         this.workshop = workshop;
-        this.time = time;
+        this.dateTime = dateTime;
     }
 
     public Long getAppointmentId() {
@@ -59,11 +59,11 @@ public class Appointment {
         this.workshop = workshop;
     }
 
-    public LocalDateTime getTime() {
-        return time;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setTime(LocalDateTime time) {
-        this.time = time;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 }

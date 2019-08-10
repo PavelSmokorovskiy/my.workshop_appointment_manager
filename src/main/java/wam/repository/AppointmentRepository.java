@@ -17,6 +17,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     List<Appointment> findByUserContains(User user);
 
-    List<Appointment> findByTimeContains(String time);
+    List<Appointment> findByDateTimeContains(String dateTime);
 
 }

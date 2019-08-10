@@ -87,14 +87,14 @@ public class AppointmentController {
     /**
      * Create an appointment
      *
-     * @link http://localhost:8080/appointment/userId/userId/workshopId/workshopId/time/time
+     * @link http://localhost:8080/appointment/userId/userId/workshopId/workshopId/dateTime/dateTime
      */
-    @PostMapping("/userId/{userId}/workshopId/{workshopId}/time/{time}")
+    @PostMapping("/userId/{userId}/workshopId/{workshopId}/dateTime/{dateTime}")
     @ResponseBody
     public ResponseEntity createWorkshop(
             @PathVariable("userId") final Long userId
             , @PathVariable("workshopId") final Long workshopId
-            , @PathVariable("time") final LocalDateTime time
+            , @PathVariable("dateTime") final LocalDateTime dateTime
             , HttpServletRequest request) {
 
         logger.requestStart(request);
@@ -120,7 +120,7 @@ public class AppointmentController {
             Appointment appointment = new Appointment(
                     user
                     , workshop
-                    , time);
+                    , dateTime);
             appointmentRepository.save(appointment);
 
             logger.requestStop(appointment);
@@ -137,16 +137,16 @@ public class AppointmentController {
     /**
      * Update a appointment data
      *
-     * @link localhost:8080/appointment/userId/userId/workshopId/workshopId/time/time
+     * @link localhost:8080/appointment/userId/userId/workshopId/workshopId/dateTime/dateTime
      */
-    @PutMapping(value = "/id/{id}/userId/{userId}/workshopId/{workshopId}/time/{time}"
+    @PutMapping(value = "/id/{id}/userId/{userId}/workshopId/{workshopId}/dateTime/{dateTime}"
             , produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity updateWorkshop(
             @PathVariable("id") final Long id
             , @PathVariable("userId") final Long userId
             , @PathVariable("workshopId") final Long workshopId
-            , @PathVariable("time") final LocalDateTime time
+            , @PathVariable("dateTime") final LocalDateTime dateTime
             , HttpServletRequest request) {
 
         logger.requestStart(request);
@@ -171,7 +171,7 @@ public class AppointmentController {
             Appointment appointment = appointmentRepository.findByAppointmentId(id);
             appointment.setUser(user);
             appointment.setWorkshop(workshop);
-            appointment.setTime(time);
+            appointment.setDateTime(dateTime);
             appointmentRepository.save(appointment);
 
             logger.requestStop();
@@ -248,18 +248,18 @@ public class AppointmentController {
     }
 
     /**
-     * Filter an appointment by time
+     * Filter an appointment by dateTime
      *
-     * @link localhost:8080/appointment/filter/time/time
+     * @link localhost:8080/appointment/filter/dateTime/dateTime
      */
-    @GetMapping("/filter/time/{time}")
+    @GetMapping("/filter/dateTime/{dateTime}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List<Appointment> getTimeFilterAppointment(@PathVariable("time") final String time, HttpServletRequest request) {
+    public List<Appointment> getTimeFilterAppointment(@PathVariable("dateTime") final String dateTime, HttpServletRequest request) {
 
         logger.requestStart(request);
 
-        List<Appointment> appointment = appointmentRepository.findByTimeContains(time);
+        List<Appointment> appointment = appointmentRepository.findByDateTimeContains(dateTime);
 
         logger.requestStop(appointment);
         return appointment;
