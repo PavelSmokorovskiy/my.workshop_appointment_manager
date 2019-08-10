@@ -98,7 +98,7 @@ public class UserController {
     /**
      * Create a user from front
      */
-    @PostMapping(value = "/saveuser")
+    @PostMapping(value = "/save")
     @ResponseBody
     public String saveUser(@RequestBody User user) {
         userRepository.save(user);

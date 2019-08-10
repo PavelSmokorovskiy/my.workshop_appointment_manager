@@ -112,6 +112,16 @@ public class WorkshopController {
     }
 
     /**
+     * Create a user from front
+     */
+    @PostMapping(value = "/save")
+    @ResponseBody
+    public String saveUser(@RequestBody Workshop workshop) {
+        workshopRepository.save(workshop);
+        return workshop.getWorkshopId().toString();
+    }
+
+    /**
      * Update a workshop data
      *
      * @link localhost:8080/workshop/companyName/companyName/trademarks/trademarks/city/city/postalCode/postalCode/country/country
