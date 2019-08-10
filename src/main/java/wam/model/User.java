@@ -34,7 +34,7 @@ public class User {
     @Column(name = "country")
     private String country;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany
     private Set<Appointment> appointments = new HashSet<>();
 
     public User() {

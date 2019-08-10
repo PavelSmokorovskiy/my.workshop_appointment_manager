@@ -72,10 +72,10 @@ public class Application implements CommandLineRunner {
         workshopRepository.save(workshop2);
 
         Appointment appointment1 = new Appointment(user1
-                , workshop1
+//                , workshop1
                 , LocalDateTime.now());
         Appointment appointment2 = new Appointment(user2
-                , workshop2
+//                , workshop2
                 , LocalDateTime.now());
         appointmentRepository.save(appointment1);
         appointmentRepository.save(appointment2);

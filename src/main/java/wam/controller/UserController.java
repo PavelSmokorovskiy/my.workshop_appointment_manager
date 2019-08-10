@@ -96,6 +96,16 @@ public class UserController {
     }
 
     /**
+     * Create a user from front
+     */
+    @PostMapping(value = "/saveuser")
+    @ResponseBody
+    public String saveUser(@RequestBody User user) {
+        userRepository.save(user);
+        return user.getUserId().toString();
+    }
+
+    /**
      * Update a user data
      *
      * @link localhost:8080/user/username/email/city/postalCode/country

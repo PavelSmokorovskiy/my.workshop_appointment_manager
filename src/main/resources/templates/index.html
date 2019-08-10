@@ -1,12 +1,135 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <title>Workshop appointment manager</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>
 </head>
 <body>
+<div class="container">
+    <div class="page-header">
+        <div class="row">
+            <div class="col-lg-8 col-md-7 col-sm-6">
+                <h1>Users</h1>
 
-Workshop appointment manager
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>City</th>
+                        <th>Postal Code</th>
+                        <th>Country</th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.userId}"></td>
+                        <td th:text="${user.username}"></td>
+                        <td th:text="${user.email}"></td>
+                        <td th:text="${user.city}"></td>
+                        <td th:text="${user.postalCode}"></td>
+                        <td th:text="${user.country}"></td>
+                        <td th:id="${user.userId}">
+                            <button class="btn btn-danger delete-user">Delete</button>
+                        </td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-md-7 col-sm-6">
+                <form>
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" class="form-control" id="username"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="text" class="form-control" id="email"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City:</label>
+                        <input type="text" class="form-control" id="city"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="postalCode">Postal Code:</label>
+                        <input type="text" class="form-control" id="postalCode"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Country:</label>
+                        <input type="text" class="form-control" id="country"/>
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="btn_submit_user">Add new User</button>
+                </form>
+            </div>
+        </div>
+        <br/>
+    </div>
+    <br>
+    <br>
+    <div th:replace="footer :: footer">...</div>
+</div>
+
+<script src="/jquery.min.js" type="application/javascript"></script>
+<script type="application/javascript">
+    $(document).ready(function () {
+
+        // Create User
+        $(document).ready(function () {
+            $('#btn_submit_user').on("click", function (e) {
+                e.preventDefault();
+                var username, email;
+                username = $('#username').val();
+                email = $('#email').val();
+                if ($.trim(username) === "") {
+                    alert("Username cannot be empty");
+                } else if ($.trim(email) === "") {
+                    alert("Email cannot be empty");
+                } else {
+                    var data = {};
+                    data["username"] = username;
+                    data["email"] = email;
+                    $.ajax({
+                        type: "POST",
+                        contentType: "application/json",
+                        url: "user/saveuser",
+                        data: JSON.stringify(data),
+                        dataType: 'json',
+                        timeout: 6000,
+                        success: function (data) {
+                            if (confirm("User with Id " + data + " saved")) {
+                                window.location.reload();
+                            }
+                        }
+                    });
+                }
+            });
+
+            //Delete user button handler
+            $('.delete-user').on("click", function (e) {
+                e.preventDefault();
+
+                if (confirm("Are you sure you want to delete user?")) {
+                    var Id = parseInt($(this).closest("td").attr("id"));
+
+                    $.ajax({
+                        type: "DELETE",
+                        url: "/user/id/" + Id,
+                        success: function () {
+                            $(".delete-user").closest("td#" + Id).parent("tr").fadeOut("slow", function () {
+                                $(".delete-user").closest("td#" + Id).parent("tr").remove();
+                            });
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

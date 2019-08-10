@@ -119,7 +119,7 @@ public class AppointmentController {
         try {
             Appointment appointment = new Appointment(
                     user
-                    , workshop
+//                    , workshop
                     , dateTime);
             appointmentRepository.save(appointment);
 
@@ -170,7 +170,7 @@ public class AppointmentController {
 
             Appointment appointment = appointmentRepository.findByAppointmentId(id);
             appointment.setUser(user);
-            appointment.setWorkshop(workshop);
+//            appointment.setWorkshop(workshop);
             appointment.setDateTime(dateTime);
             appointmentRepository.save(appointment);
 

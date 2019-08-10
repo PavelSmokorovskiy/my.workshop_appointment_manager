@@ -15,13 +15,13 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long appointmentId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "workshop_id")
-    private Workshop workshop;
+//    @ManyToOne
+//    @JoinColumn(name = "workshop_id", nullable = false)
+//    private Workshop workshop;
 
     @Column(name = "date_time")
     private LocalDateTime dateTime;
@@ -29,9 +29,11 @@ public class Appointment {
     public Appointment() {
     }
 
-    public Appointment(User user, Workshop workshop, LocalDateTime dateTime) {
+    public Appointment(User user
+//            , Workshop workshop
+            , LocalDateTime dateTime) {
         this.user = user;
-        this.workshop = workshop;
+//        this.workshop = workshop;
         this.dateTime = dateTime;
     }
 
@@ -51,13 +53,13 @@ public class Appointment {
         this.user = user;
     }
 
-    public Workshop getWorkshop() {
-        return workshop;
-    }
-
-    public void setWorkshop(Workshop workshop) {
-        this.workshop = workshop;
-    }
+//    public Workshop getWorkshop() {
+//        return workshop;
+//    }
+//
+//    public void setWorkshop(Workshop workshop) {
+//        this.workshop = workshop;
+//    }
 
     public LocalDateTime getDateTime() {
         return dateTime;
