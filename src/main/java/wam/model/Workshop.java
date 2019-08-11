@@ -33,7 +33,7 @@ public class Workshop {
     @Column(name = "country")
     private String country;
 
-//    @OneToMany
+//    @OneToMany(cascade = CascadeType.REMOVE)
 //    private Set<Appointment> appointments = new HashSet<>();
 
     public Workshop() {

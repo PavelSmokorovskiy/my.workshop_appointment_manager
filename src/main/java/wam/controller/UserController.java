@@ -7,8 +7,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import wam.config.Logging;
+import wam.model.Appointment;
 import wam.model.ResponseDescription;
 import wam.model.User;
+import wam.repository.AppointmentRepository;
 import wam.repository.UserRepository;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +27,9 @@ public class UserController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    AppointmentRepository appointmentRepository;
 
     /**
      * Get all users
@@ -165,7 +170,11 @@ public class UserController {
                     + id + " was not found."), HttpStatus.NOT_FOUND);
         }
 
-        userRepository.deleteById(id);
+        List<Appointment> appointments = appointmentRepository.findByUser_UserId(id);
+        for (Appointment appointment : appointments)
+            appointmentRepository.delete(appointment);
+
+        userRepository.delete(user);
         logger.requestStop();
         return new ResponseEntity<>(new ResponseDescription("User with id "
                 + id + " was deleted. " + total() + " users total"), HttpStatus.OK);

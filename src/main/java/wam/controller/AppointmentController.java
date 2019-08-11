@@ -228,41 +228,41 @@ public class AppointmentController {
                 , HttpStatus.OK);
     }
 
-    /**
-     * Filter an appointment by userId
-     *
-     * @link localhost:8080/appointment/filter/userId/userId
-     */
-    @GetMapping("/filter/userId/{userId}")
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public List<Appointment> getUserIdFilterAppointment(@PathVariable("userId") final Long userId, HttpServletRequest request) {
+//    /**
+//     * Filter an appointment by userId
+//     *
+//     * @link localhost:8080/appointment/filter/userId/userId
+//     */
+//    @GetMapping("/filter/userId/{userId}")
+//    @ResponseStatus(HttpStatus.OK)
+//    @ResponseBody
+//    public List<Appointment> getUserIdFilterAppointment(@PathVariable("userId") final Long userId, HttpServletRequest request) {
+//
+//        logger.requestStart(request);
+//
+//        User user = userRepository.findByUserId(userId);
+//        List<Appointment> appointment = appointmentRepository.findByUserContains(user);
+//
+//        logger.requestStop(appointment);
+//        return appointment;
+//    }
 
-        logger.requestStart(request);
-
-        User user = userRepository.findByUserId(userId);
-        List<Appointment> appointment = appointmentRepository.findByUserContains(user);
-
-        logger.requestStop(appointment);
-        return appointment;
-    }
-
-    /**
-     * Filter an appointment by dateTime
-     *
-     * @link localhost:8080/appointment/filter/dateTime/dateTime
-     */
-    @GetMapping("/filter/dateTime/{dateTime}")
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public List<Appointment> getTimeFilterAppointment(@PathVariable("dateTime") final String dateTime, HttpServletRequest request) {
-
-        logger.requestStart(request);
-
-        List<Appointment> appointment = appointmentRepository.findByDateTimeContains(dateTime);
-
-        logger.requestStop(appointment);
-        return appointment;
-    }
+//    /**
+//     * Filter an appointment by dateTime
+//     *
+//     * @link localhost:8080/appointment/filter/dateTime/dateTime
+//     */
+//    @GetMapping("/filter/dateTime/{dateTime}")
+//    @ResponseStatus(HttpStatus.OK)
+//    @ResponseBody
+//    public List<Appointment> getTimeFilterAppointment(@PathVariable("dateTime") final String dateTime, HttpServletRequest request) {
+//
+//        logger.requestStart(request);
+//
+//        List<Appointment> appointment = appointmentRepository.findByDateTimeContains(dateTime);
+//
+//        logger.requestStop(appointment);
+//        return appointment;
+//    }
 
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import wam.repository.AppointmentRepository;
 import wam.repository.UserRepository;
 import wam.repository.WorkshopRepository;
 
@@ -20,10 +21,14 @@ public class HomePageController {
     @Autowired
     WorkshopRepository workshopRepository;
 
+    @Autowired
+    AppointmentRepository appointmentRepository;
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("users", userRepository.findAll());
         model.addAttribute("workshops", workshopRepository.findAll());
+        model.addAttribute("appointments", appointmentRepository.findAll());
         return "index";
     }
 }

@@ -15,8 +15,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     Appointment findByAppointmentId(Long appointmentId);
 
-    List<Appointment> findByUserContains(User user);
+    List<Appointment> findByUser_UserId(Long uerId);
 
-    List<Appointment> findByDateTimeContains(String dateTime);
+//    List<Appointment> findByUserContains(User user);
+//    List<Appointment> findByDateTimeContains(String dateTime);
 
 }

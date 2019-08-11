@@ -1,6 +1,11 @@
 package wam.model;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,15 +14,16 @@ import java.util.Set;
  * User entity
  */
 @Entity
-@Table(name = "users")
+//@Table(name = "users")
 public class User {
 
     @Id
-    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id", updatable = false, nullable = false)
     private Long userId;
 
     @Column(name = "username")
+//    @NotBlank
     @NotEmpty(message = "Please provide username")
     private String username;
 
