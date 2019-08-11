@@ -10,7 +10,7 @@
     <div class="page-header">
         <div class="row">
             <div class="col-lg-8 col-md-7 col-sm-6">
-                <h1>Appointment</h1>
+                <h1>Appointments</h1>
 
                 <table class="table table-striped table-hover">
                     <thead>
@@ -64,9 +64,8 @@
                     <div class="form-group row">
                         <label for="datetime-input" class="col-2 col-form-label">Select date and time</label>
                         <div class="col-10">
-                            <input class="form-control" type="datetime-local" value="2018-06-14T00:00"
-                                   id="datetime-input">
-                            <script>document.getElementById('datetime-local-input').value = new Date().toISOString().substring(0, 16)</script>
+                            <input class="form-control" type="datetime-local" value="" id="datetime-input">
+                            <script>document.getElementById('datetime-input').value = new Date().toISOString().substring(0,16)</script>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary" id="btn-submit-appointment">Add a new appointment
@@ -228,9 +227,13 @@
             } else {
                 $.ajax({
                     type: "POST",
-                    url: "appointment/userId/" + userId + "/workshopId/1/dateTime/" + dateTime,
-                    success: function () {
-                        if (confirm("Appointment with Id " + data + " saved")) {
+                    url: "appointment/save",
+                    data: {
+                        userId: userId,
+                        dateTime: dateTime
+                    },
+                    success: function (data) {
+                        if (confirm("Appointment with Id " + data + " Saved")) {
                             window.location.reload();
                         }
                     }

@@ -139,12 +139,16 @@ public class AppointmentController {
      */
     @PostMapping(value = "/save")
     @ResponseBody
-    public void saveAppointmentFromFront(@RequestParam String userId, @RequestParam LocalDateTime dateTime) {
+    public String saveAppointmentFromFront(
+            @RequestParam("userId") final Long userId
+            , @RequestParam("dateTime") final String dateTime
+    ) {
 
-        System.out.println(userId);
-        System.out.println(dateTime);
-//        appointmentRepository.save(appointment);
-//        return appointment.getAppointmentId().toString();
+        User user = userRepository.findByUserId(userId);
+        LocalDateTime appointmentDateTime = LocalDateTime.parse(dateTime);
+        Appointment appointment = new Appointment(user, appointmentDateTime);
+        appointmentRepository.save(appointment);
+        return appointment.getAppointmentId().toString();
     }
 
     /**
