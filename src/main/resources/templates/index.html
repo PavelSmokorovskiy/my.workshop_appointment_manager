@@ -62,10 +62,11 @@
                         </select>
                     </div>
                     <div class="form-group row">
-                        <label for="datetime-local-input" class="col-2 col-form-label">Select date and time</label>
+                        <label for="datetime-input" class="col-2 col-form-label">Select date and time</label>
                         <div class="col-10">
-                            <input class="form-control" type="datetime-local" value="" id="datetime-local-input">
-                            <script>document.getElementById('datetime-local-input').value = new Date().toISOString().substring(0,16)</script>
+                            <input class="form-control" type="datetime-local" value="2018-06-14T00:00"
+                                   id="datetime-input">
+                            <script>document.getElementById('datetime-local-input').value = new Date().toISOString().substring(0, 16)</script>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary" id="btn-submit-appointment">Add a new appointment
@@ -214,6 +215,48 @@
 <script type="application/javascript">
     $(document).ready(function () {
 
+        // Create an appointment button handler
+        $('#btn-submit-appointment').on("click", function (e) {
+            e.preventDefault();
+            var userId, dateTime;
+            userId = $('#user_id').val();
+            dateTime = $('#datetime-input').val();
+            if ($.trim(userId) === "") {
+                alert("User not selected");
+            } else if ($.trim(dateTime) === "") {
+                alert("Date and time not specified");
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "appointment/userId/" + userId + "/workshopId/1/dateTime/" + dateTime,
+                    success: function () {
+                        if (confirm("Appointment with Id " + data + " saved")) {
+                            window.location.reload();
+                        }
+                    }
+                });
+            }
+        });
+
+        //Delete an appointment button handler
+        $('.delete-appointment').on("click", function (e) {
+            e.preventDefault();
+
+            if (confirm("Are you sure you want to delete the appointment?")) {
+                var Id = parseInt($(this).closest("td").attr("id"));
+
+                $.ajax({
+                    type: "DELETE",
+                    url: "/appointment/id/" + Id,
+                    success: function () {
+                        $(".delete-appointment").closest("td#" + Id).parent("tr").fadeOut("slow", function () {
+                            $(".delete-appointment").closest("td#" + Id).parent("tr").remove();
+                        });
+                    }
+                });
+            }
+        });
+
         // Create a user button handler
         $('#btn-submit-user').on("click", function (e) {
             e.preventDefault();
@@ -254,7 +297,7 @@
         $('.delete-user').on("click", function (e) {
             e.preventDefault();
 
-            if (confirm("Are you sure you want to delete user?")) {
+            if (confirm("Are you sure you want to delete the user?")) {
                 var Id = parseInt($(this).closest("td").attr("id"));
 
                 $.ajax({
@@ -309,7 +352,7 @@
         $('.delete-workshop').on("click", function (e) {
             e.preventDefault();
 
-            if (confirm("Are you sure you want to delete workshop?")) {
+            if (confirm("Are you sure you want to delete the workshop?")) {
                 var Id = parseInt($(this).closest("td").attr("id"));
 
                 $.ajax({

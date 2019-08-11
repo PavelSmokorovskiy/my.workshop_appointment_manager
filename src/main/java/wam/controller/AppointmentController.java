@@ -91,7 +91,7 @@ public class AppointmentController {
      */
     @PostMapping("/userId/{userId}/workshopId/{workshopId}/dateTime/{dateTime}")
     @ResponseBody
-    public ResponseEntity createWorkshop(
+    public ResponseEntity createAppointment(
             @PathVariable("userId") final Long userId
             , @PathVariable("workshopId") final Long workshopId
             , @PathVariable("dateTime") final LocalDateTime dateTime
@@ -132,6 +132,19 @@ public class AppointmentController {
             return new ResponseEntity<>(new ResponseDescription("Didn't create")
                     , HttpStatus.NOT_ACCEPTABLE);
         }
+    }
+
+    /**
+     * Create an appointment from front
+     */
+    @PostMapping(value = "/save")
+    @ResponseBody
+    public void saveAppointmentFromFront(@RequestParam String userId, @RequestParam LocalDateTime dateTime) {
+
+        System.out.println(userId);
+        System.out.println(dateTime);
+//        appointmentRepository.save(appointment);
+//        return appointment.getAppointmentId().toString();
     }
 
     /**
