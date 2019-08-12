@@ -119,7 +119,7 @@ public class AppointmentController {
         try {
             Appointment appointment = new Appointment(
                     user
-//                    , workshop
+                    , workshop
                     , dateTime);
             appointmentRepository.save(appointment);
 
@@ -141,12 +141,14 @@ public class AppointmentController {
     @ResponseBody
     public String saveAppointmentFromFront(
             @RequestParam("userId") final Long userId
+            , @RequestParam("workshopId") final Long workshopId
             , @RequestParam("dateTime") final String dateTime
     ) {
 
         User user = userRepository.findByUserId(userId);
+        Workshop workshop = workshopRepository.findByWorkshopId(workshopId);
         LocalDateTime appointmentDateTime = LocalDateTime.parse(dateTime);
-        Appointment appointment = new Appointment(user, appointmentDateTime);
+        Appointment appointment = new Appointment(user, workshop, appointmentDateTime);
         appointmentRepository.save(appointment);
         return appointment.getAppointmentId().toString();
     }
@@ -187,7 +189,7 @@ public class AppointmentController {
 
             Appointment appointment = appointmentRepository.findByAppointmentId(id);
             appointment.setUser(user);
-//            appointment.setWorkshop(workshop);
+            appointment.setWorkshop(workshop);
             appointment.setDateTime(dateTime);
             appointmentRepository.save(appointment);
 
@@ -245,41 +247,41 @@ public class AppointmentController {
                 , HttpStatus.OK);
     }
 
-//    /**
-//     * Filter an appointment by userId
-//     *
-//     * @link localhost:8080/appointment/filter/userId/userId
-//     */
-//    @GetMapping("/filter/userId/{userId}")
-//    @ResponseStatus(HttpStatus.OK)
-//    @ResponseBody
-//    public List<Appointment> getUserIdFilterAppointment(@PathVariable("userId") final Long userId, HttpServletRequest request) {
-//
-//        logger.requestStart(request);
-//
-//        User user = userRepository.findByUserId(userId);
-//        List<Appointment> appointment = appointmentRepository.findByUserContains(user);
-//
-//        logger.requestStop(appointment);
-//        return appointment;
-//    }
+    /**
+     * Filter an appointment by userId
+     *
+     * @link localhost:8080/appointment/filter/userId/userId
+     */
+    @GetMapping("/filter/userId/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<Appointment> getUserIdFilterAppointment(@PathVariable("userId") final Long userId, HttpServletRequest request) {
 
-//    /**
-//     * Filter an appointment by dateTime
-//     *
-//     * @link localhost:8080/appointment/filter/dateTime/dateTime
-//     */
-//    @GetMapping("/filter/dateTime/{dateTime}")
-//    @ResponseStatus(HttpStatus.OK)
-//    @ResponseBody
-//    public List<Appointment> getTimeFilterAppointment(@PathVariable("dateTime") final String dateTime, HttpServletRequest request) {
-//
-//        logger.requestStart(request);
-//
-//        List<Appointment> appointment = appointmentRepository.findByDateTimeContains(dateTime);
-//
-//        logger.requestStop(appointment);
-//        return appointment;
-//    }
+        logger.requestStart(request);
+
+        User user = userRepository.findByUserId(userId);
+        List<Appointment> appointment = appointmentRepository.findByUserContains(user);
+
+        logger.requestStop(appointment);
+        return appointment;
+    }
+
+    /**
+     * Filter an appointment by dateTime
+     *
+     * @link localhost:8080/appointment/filter/dateTime/dateTime
+     */
+    @GetMapping("/filter/dateTime/{dateTime}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<Appointment> getTimeFilterAppointment(@PathVariable("dateTime") final String dateTime, HttpServletRequest request) {
+
+        logger.requestStart(request);
+
+        List<Appointment> appointment = appointmentRepository.findByDateTimeContains(dateTime);
+
+        logger.requestStop(appointment);
+        return appointment;
+    }
 
 }

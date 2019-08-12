@@ -33,8 +33,8 @@ public class Workshop {
     @Column(name = "country")
     private String country;
 
-//    @OneToMany(cascade = CascadeType.REMOVE)
-//    private Set<Appointment> appointments = new HashSet<>();
+    @OneToMany
+    private Set<Appointment> appointments = new HashSet<>();
 
     public Workshop() {
     }
@@ -100,11 +100,11 @@ public class Workshop {
         this.country = country;
     }
 
-//    public Set<Appointment> getAppointments() {
-//        return appointments;
-//    }
-//
-//    public void setAppointments(Set<Appointment> appointments) {
-//        this.appointments = appointments;
-//    }
+    public Set<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(Set<Appointment> appointments) {
+        this.appointments = appointments;
+    }
 }

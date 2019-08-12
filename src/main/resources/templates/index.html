@@ -3,7 +3,8 @@
 <head>
     <title>Workshop appointment manager</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" href="/bootstrap.min.css" media="screen"/>
+    <link rel="stylesheet" href="bootstrap.min.css" media="screen"/>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="container">
@@ -17,6 +18,7 @@
                     <tr>
                         <th>Appointment Id</th>
                         <th>User Id</th>
+                        <th>Workshop Id</th>
                         <th>dateTime</th>
                     </tr>
                     </thead>
@@ -25,10 +27,14 @@
                     <tr th:each="appointment : ${appointments}">
                         <td th:text="${appointment.appointmentId}"></td>
                         <td th:text="${appointment.user.userId}"></td>
+                        <td th:text="${appointment.workshop.workshopId}"></td>
+                        <td th:text="${appointment.dateTime}"></td>
                         <td th:id="${appointment.user.userId}">
                             <form class="delete-user"></form>
                         </td>
-                        <td th:text="${appointment.dateTime}"></td>
+                        <td th:id="${appointment.workshop.workshopId}">
+                            <form class="delete-workshop"></form>
+                        </td>
                         <td th:id="${appointment.appointmentId}">
                             <button class="btn btn-danger delete-appointment">Delete</button>
                         </td>
@@ -45,7 +51,7 @@
                         <label for="user_id">Select a user:</label>
                         <p></p>
                         <select id="user_id" th:field="*{users}">
-                            <option value="0">---Choose a user---</option>
+                            <option value="">---Choose a user---</option>
                             <option th:each="user : ${users}"
                                     th:value="${user.userId}"
                                     th:utext="${user.username}"></option>
@@ -55,7 +61,7 @@
                         <label for="workshop_id">Select a workshop:</label>
                         <p></p>
                         <select id="workshop_id" th:field="*{workshops}">
-                            <option value="0">---Choose a workshop---</option>
+                            <option value="">---Choose a workshop---</option>
                             <option th:each="workshop : ${workshops}"
                                     th:value="${workshop.workshopId}"
                                     th:utext="${workshop.companyName}"></option>
@@ -65,7 +71,7 @@
                         <label for="datetime-input" class="col-2 col-form-label">Select date and time</label>
                         <div class="col-10">
                             <input class="form-control" type="datetime-local" value="" id="datetime-input">
-                            <script>document.getElementById('datetime-input').value = new Date().toISOString().substring(0,16)</script>
+                            <script>document.getElementById('datetime-input').value = new Date().toISOString().substring(0, 16)</script>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary" id="btn-submit-appointment">Add a new appointment
@@ -209,7 +215,6 @@
     <br>
     <div th:replace="footer :: footer">...</div>
 </div>
-
 <script src="/jquery.min.js" type="application/javascript"></script>
 <script type="application/javascript">
     $(document).ready(function () {
@@ -217,11 +222,14 @@
         // Create an appointment button handler
         $('#btn-submit-appointment').on("click", function (e) {
             e.preventDefault();
-            var userId, dateTime;
+            var userId, workshopId, dateTime;
             userId = $('#user_id').val();
+            workshopId = $('#workshop_id').val();
             dateTime = $('#datetime-input').val();
             if ($.trim(userId) === "") {
                 alert("User not selected");
+            } else if ($.trim(workshopId) === "") {
+                alert("Workshop not selected");
             } else if ($.trim(dateTime) === "") {
                 alert("Date and time not specified");
             } else {
@@ -230,11 +238,12 @@
                     url: "appointment/save",
                     data: {
                         userId: userId,
+                        workshopId: workshopId,
                         dateTime: dateTime
                     },
                     success: function (data) {
                         if (confirm("Appointment with Id " + data + " Saved")) {
-                            window.location.reload();
+                            location.reload();
                         }
                     }
                 });
@@ -289,7 +298,7 @@
                     timeout: 6000,
                     success: function (data) {
                         if (confirm("User with Id " + data + " saved")) {
-                            window.location.reload();
+                            location.reload();
                         }
                     }
                 });
@@ -309,6 +318,7 @@
                     success: function () {
                         $(".delete-user").closest("td#" + Id).parent("tr").fadeOut("slow", function () {
                             $(".delete-user").closest("td#" + Id).parent("tr").remove();
+                            location.reload();
                         });
                     }
                 });
@@ -344,7 +354,7 @@
                     timeout: 6000,
                     success: function (data) {
                         if (confirm("Workshop with Id " + data + " saved")) {
-                            window.location.reload();
+                            location.reload();
                         }
                     }
                 });
@@ -364,6 +374,7 @@
                     success: function () {
                         $(".delete-workshop").closest("td#" + Id).parent("tr").fadeOut("slow", function () {
                             $(".delete-workshop").closest("td#" + Id).parent("tr").remove();
+                            location.reload();
                         });
                     }
                 });

@@ -1,0 +1,17 @@
+a:link {
+    color: white;
+}
+
+a:visited {
+    color: white;
+}
+
+.footer {
+    background-color: #1C78C3;
+    color: white;
+    display: block;
+    height: 65px;
+    left: 0;
+    position: absolute;
+    width: 100%;
+}

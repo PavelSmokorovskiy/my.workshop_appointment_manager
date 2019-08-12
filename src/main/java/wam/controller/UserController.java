@@ -162,9 +162,7 @@ public class UserController {
         logger.requestStart(request);
 
         User user = userRepository.findByUserId(id);
-
         if (user == null) {
-
             logger.requestStop();
             return new ResponseEntity<>(new ResponseDescription("User with id "
                     + id + " was not found."), HttpStatus.NOT_FOUND);

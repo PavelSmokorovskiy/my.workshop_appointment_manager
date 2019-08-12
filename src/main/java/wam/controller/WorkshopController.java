@@ -7,8 +7,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import wam.config.Logging;
+import wam.model.Appointment;
 import wam.model.ResponseDescription;
 import wam.model.Workshop;
+import wam.repository.AppointmentRepository;
 import wam.repository.WorkshopRepository;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +27,9 @@ public class WorkshopController {
 
     @Autowired
     private WorkshopRepository workshopRepository;
+
+    @Autowired
+    AppointmentRepository appointmentRepository;
 
     /**
      * Get total number of workshops
@@ -168,23 +173,26 @@ public class WorkshopController {
      */
     @DeleteMapping(value = "/id/{id}")
     @ResponseBody
-    public ResponseEntity<?> deleteWorkshop(@PathVariable("id") final Long id, HttpServletRequest request) {
+    public ResponseEntity<?> deleteWorkshop(@PathVariable("id") final Long workshopId, HttpServletRequest request) {
 
         logger.requestStart(request);
 
-        Workshop workshop = workshopRepository.findByWorkshopId(id);
-
+        Workshop workshop = workshopRepository.findByWorkshopId(workshopId);
         if (workshop == null) {
 
             logger.requestStop();
             return new ResponseEntity<>(new ResponseDescription("Workshop with id "
-                    + id + " was not found."), HttpStatus.NOT_FOUND);
+                    + workshopId + " was not found."), HttpStatus.NOT_FOUND);
         }
 
-        workshopRepository.deleteById(id);
+        List<Appointment> appointments = appointmentRepository.findByWorkshop_WorkshopId(workshopId);
+        for (Appointment appointment : appointments)
+            appointmentRepository.delete(appointment);
+
+        workshopRepository.deleteById(workshopId);
         logger.requestStop();
         return new ResponseEntity<>(new ResponseDescription("Workshop with id "
-                + id + " was deleted. " + total() + " Workshops total"), HttpStatus.OK);
+                + workshopId + " was deleted. " + total() + " Workshops total"), HttpStatus.OK);
     }
 
     /**
