@@ -1,5 +1,12 @@
+# Web UI Application
+* http://localhost:8080/
+# Endpoints: 
+* http://localhost:8080/appointments
+* http://localhost:8080/users
+* http://localhost:8080/workshops
+
 # Workshop appointment manager
-Spring based web application which allows to make an appointment in a car workshop. Without a UI frontend. All Operations available over a Rest API. For the data
+Spring based web application which allows to make an appointment in a car workshop. With a UI frontend. All Operations available over a Rest API. For the data
 storage using a simple in memory storage (List, Map etc.). But it should be easy to replace the
 in-memory storage later with a real database. 
 ~~~~~
